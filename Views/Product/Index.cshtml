@@ -1,0 +1,46 @@
+@model IEnumerable<Product_Inventory_Management_Model.Models.Product>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Inventory Management</title>
+</head>
+<body>
+    <h1>Inventory Management</h1>
+
+    <table border="1" cellpadding="6">
+        <tr>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductId</td>
+                <td>@item.ProductName</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price</td>
+                <td>@Html.ActionLink("Edit", "Edit", new { id = item.ProductId })</td>
+                <td>
+                    @using (Html.BeginForm("Delete", "Product", new { id = item.ProductId }, FormMethod.Post))
+                    {
+                        <input type="submit" value="Delete" onclick="return confirm('Delete this product?');" />
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+
+    <p>@Html.ActionLink("Add New Product", "Create")</p>
+</body>
+</html>
